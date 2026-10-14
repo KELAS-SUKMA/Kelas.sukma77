@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KELAS SUKMA - SKD CPNS</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>*{font-family:'Plus Jakarta Sans',sans-serif} .sukma-grad{background:linear-gradient(135deg,#8B5CF6 0%,#EC4899 50%,#06B6D4 100%)}</style>
+</head>
+<body class="bg-[#faf7ff]">
+<!-- PUBLIC LANDING PAGE -->
+<div id="public-page">
+<header class="bg-white sticky top-0 z-30 border-b">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl sukma-grad flex items-center justify-center text-white font-extrabold">🎓</div><div><div class="font-extrabold leading-none">KELAS SUKMA</div><div class="text-xs font-bold text-violet-600">SKD CPNS <span class="tahun">2025</span></div></div></div>
+<div class="flex gap-2"><a id="wa-top" href="#" class="bg-green-500 text-white px-5 py-2.5 rounded-full font-bold text-sm">WA</a><button onclick="openAdminLogin()" class="bg-slate-900 text-white px-5 py-2.5 rounded-full font-bold text-sm">Admin Panel</button></div>
+</div>
+</header>
+<section class="relative overflow-hidden">
+<div class="absolute inset-0 sukma-grad"></div>
+<div class="relative max-w-7xl mx-auto px-6 py-24 text-center text-white">
+<div class="inline-flex bg-white/20 backdrop-blur px-5 py-2 rounded-full text-sm font-bold mb-6" id="badge">🔥 <span id="lolos">12.000+</span> Lolos CPNS <span class="tahun">2025</span></div>
+<h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Lolos CPNS <span class="tahun text-yellow-300">2025</span><br>Bersama Kelas Sukma</h1>
+<p class="text-xl text-white/90 max-w-3xl mx-auto mb-3" id="hero-sub">Bimbel SKD No.1 - Tingkat kelulusan <span id="persen">92%</span>. Materi TWK TIU TKP lengkap!</p>
+<p class="text-white/70 mb-10">Belajar bareng mentor terbaik, TO harian, pembahasan detail.</p>
+<a href="#program" class="bg-white text-violet-600 px-10 py-4 rounded-full font-extrabold text-lg shadow-xl inline-block">Gabung Sekarang - Mulai <span class="harga1">299K</span></a>
+<div id="db-status" class="mt-6 text-xs bg-white/20 inline-block px-4 py-2 rounded-full">⏳ Loading...</div>
+</div>
+</section>
+<section id="program" class="max-w-7xl mx-auto px-6 py-16">
+<h2 class="text-3xl font-extrabold text-center mb-10">Pilih Program <span class="tahun">2025</span></h2>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="bg-white rounded-[24px] p-8 border"><h3 class="font-bold">Basic</h3><div class="text-3xl font-extrabold mt-2 harga1">Rp 299K</div><p class="text-slate-500 text-sm mt-3">20 Paket TO, Pembahasan lengkap</p><button class="mt-6 w-full bg-slate-900 text-white py-3 rounded-xl font-bold">Pilih Basic</button></div>
+<div class="bg-slate-900 rounded-[24px] p-8 text-white relative"><div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-slate-900 px-4 py-1 rounded-full text-xs font-extrabold">PALING LARIS</div><h3 class="font-bold mt-2">Intensif</h3><div class="text-3xl font-extrabold mt-2 harga2">Rp 599K</div><p class="text-white/60 text-sm mt-3">40 TO + Live Class + Mentoring</p><button class="mt-6 w-full bg-white text-slate-900 py-3 rounded-xl font-bold">Pilih Intensif</button></div>
+<div class="bg-white rounded-[24px] p-8 border"><h3 class="font-bold">Privat</h3><div class="text-3xl font-extrabold mt-2 harga3">Rp 3 Jt</div><p class="text-slate-500 text-sm mt-3">1 on 1 dengan mentor terbaik</p><button class="mt-6 w-full bg-slate-900 text-white py-3 rounded-xl font-bold">Pilih Privat</button></div>
+</div>
+</section>
+<footer class="bg-slate-900 text-white py-10 text-center"><p id="footer" class="text-sm">© 2025 Kelas Sukma</p></footer>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="admin-login" class="fixed inset-0 bg-black/70 z-[100] hidden flex items-center justify-center p-6">
+<div class="bg-white rounded-[24px] p-8 w-full max-w-sm"><h2 class="text-2xl font-extrabold mb-2">Login Admin</h2><p class="text-sm text-slate-500 mb-4">Masuk untuk kelola tahun & harga</p><input id="admin-pass" type="password" placeholder="Password: sukma123" class="w-full border-2 rounded-xl px-4 py-4 mb-3"><button onclick="loginAdmin()" class="w-full sukma-grad text-white py-4 rounded-xl font-bold">Masuk Admin</button><button onclick="closeAdminLogin()" class="w-full mt-2 bg-slate-100 py-3 rounded-xl">Batal - Kembali ke Website</button></div>
+</div>
+
+<!-- ADMIN DASHBOARD PAGE (separate) -->
+<div id="admin-page" class="hidden min-h-screen bg-[#f8f5ff]">
+<header class="bg-white border-b sticky top-0 z-30"><div class="max-w-[1600px] mx-auto px-6 py-3 flex justify-between items-center"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-xl sukma-grad flex items-center justify-center text-white font-bold">🎓</div><div><div class="font-extrabold leading-none">KELAS SUKMA</div><div class="text-xs font-bold text-violet-600">SKD CPNS <span class="tahun">2025</span> • Admin</div></div></div><div class="flex gap-2"><button onclick="backToPublic()" class="border px-5 py-2.5 rounded-full text-sm font-bold">← Lihat Website</button><button onclick="logoutAdmin()" class="border px-4 py-2.5 rounded-full text-sm">Logout</button></div></div></header>
+<div class="max-w-[1600px] mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6">
+<aside class="bg-white rounded-[24px] p-4 border h-fit sticky top-[80px]">
+<button class="w-full text-left px-4 py-3 rounded-xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-cyan-400 text-white">📊 Statistik</button>
+<button onclick="openGlobal()" class="w-full text-left px-4 py-3 rounded-xl font-bold bg-violet-100 mt-1 flex justify-between items-center">🌐 Global Settings <span class="bg-yellow-200 text-yellow-800 text-[10px] px-2 py-1 rounded-full font-extrabold">NEW • SAKTI</span></button>
+<div class="mt-6 bg-violet-50 rounded-2xl p-4 text-xs"><div>💡 Theme: Sukma Violet aktif.</div><div class="mt-3 p-2 bg-green-100 rounded-xl text-green-800 font-bold" id="admin-sync">✅ Supabase Live - Siap edit Tahun!</div><div class="mt-2">Tahun aktif: <b class="tahun text-violet-600 text-base">2025</b></div></div>
+</aside>
+<main class="space-y-6">
+<div class="bg-white rounded-[24px] p-6 md:p-8 border"><h2 class="text-2xl font-extrabold">Dashboard Admin</h2><div class="grid grid-cols-3 gap-4 mt-6"><div class="border rounded-2xl p-5"><div class="text-xs font-bold text-slate-500">TOTAL MEMBER</div><div class="text-3xl font-extrabold">3</div></div><div class="bg-violet-50 border rounded-2xl p-5"><div class="text-xs font-bold text-violet-600">PENDING</div><div class="text-3xl font-extrabold text-violet-600">0</div></div><div class="border rounded-2xl p-5"><div class="text-xs font-bold">TOTAL TRYOUT</div><div class="text-3xl font-extrabold text-violet-600">0</div></div></div></div>
+<div class="bg-white rounded-[24px] p-6 md:p-8 border"><h2 class="text-xl font-extrabold mb-1">🌐 Global Settings - SAKTI MODE</h2><p class="text-sm text-slate-500 mb-6">Ubah disini langsung jadi di semua HP siswa! Tidak perlu GitHub!</p>
+<div class="space-y-4">
+<div class="bg-violet-50 border-2 border-violet-300 rounded-2xl p-5"><label class="block font-extrabold">TAHUN ANGKATAN - Ganti 2025 jadi 2027 disini!</label><input id="g-tahun" class="w-full mt-2 border-2 border-violet-400 rounded-xl px-4 py-4 text-2xl font-extrabold" value="2025"><p class="text-xs text-green-600 font-bold mt-2">Ganti jadi 2027, klik Simpan, langsung jadi 2027 di semua HP!</p></div>
+<div class="grid md:grid-cols-2 gap-4">
+<label class="block"><span class="text-sm font-bold">Jumlah Lolos</span><input id="g-lolos" class="w-full mt-1 border rounded-xl px-4 py-3" value="12.000+"></label>
+<label class="block"><span class="text-sm font-bold">Persen Lulus</span><input id="g-persen" class="w-full mt-1 border rounded-xl px-4 py-3" value="92%"></label>
+<label class="block"><span class="text-sm font-bold">Harga Basic</span><input id="g-harga1" class="w-full mt-1 border rounded-xl px-4 py-3" value="Rp 299K"></label>
+<label class="block"><span class="text-sm font-bold">Harga Intensif</span><input id="g-harga2" class="w-full mt-1 border rounded-xl px-4 py-3" value="Rp 599K"></label>
+<label class="block"><span class="text-sm font-bold">Harga Privat</span><input id="g-harga3" class="w-full mt-1 border rounded-xl px-4 py-3" value="Rp 3 Jt"></label>
+<label class="block"><span class="text-sm font-bold">Link WA</span><input id="g-wa" class="w-full mt-1 border rounded-xl px-4 py-3" value="https://wa.me/6281234567890"></label>
+</div>
+</div>
+<button onclick="saveGlobal()" class="mt-6 w-full bg-green-600 text-white py-5 rounded-2xl font-extrabold text-lg">💾 SIMPAN GLOBAL - Live di Semua HP!</button>
+</div>
+</main>
+</div>
+</div>
+
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-6 py-4 rounded-full font-bold hidden z-[200] shadow-2xl max-w-[90vw] text-center"></div>
+
+<script>
+const SUPABASE_URL='https://hbpaizdatzxlmzligdzw.supabase.co';
+const SUPABASE_KEY='sb_publishable_9c5qTdBmX2qNFd6iOfchLg_wXIi_9sO';
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const defaults={tahun:'2025',jumlah_lolos:'12.000+',persen_lulus:'92%',p1_harga:'Rp 299K',p2_harga:'Rp 599K',p3_harga:'Rp 3 Jt',wa_link:'https://wa.me/6281234567890',hero_sub:'Bimbel SKD No.1',footer_text:'© 2025 Kelas Sukma'};
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),4000);}
+function getVal(map,k){const v=map[k]; if(!v) return null; if(typeof v==='object') return v.text||null; return v;}
+function apply(map){
+ const gv=(k)=>getVal(map,k)||defaults[k];
+ document.querySelectorAll('.tahun').forEach(e=>e.textContent=gv('tahun'));
+ document.getElementById('lolos').textContent=gv('jumlah_lolos');
+ document.getElementById('persen').textContent=gv('persen_lulus');
+ document.querySelectorAll('.harga1').forEach(e=>e.textContent=gv('p1_harga'));
+ document.querySelectorAll('.harga2').forEach(e=>e.textContent=gv('p2_harga'));
+ document.querySelectorAll('.harga3').forEach(e=>e.textContent=gv('p3_harga'));
+ const set=(id,k)=>{const el=document.getElementById(id); if(el) el.value=gv(k);};
+ set('g-tahun','tahun'); set('g-lolos','jumlah_lolos'); set('g-persen','persen_lulus'); set('g-harga1','p1_harga'); set('g-harga2','p2_harga'); set('g-harga3','p3_harga'); set('g-wa','wa_link');
+}
+async function load(){
+ try{
+  const {data,error}=await supabaseClient.from('site_settings').select('*');
+  if(error) throw error;
+  const map={}; if(data) data.forEach(r=>map[r.key]=r.value);
+  apply(map);
+  document.getElementById('db-status').textContent='✅ Live - Tahun '+ (getVal(map,'tahun')||'2025') +' - Semua HP Sinkron!';
+  document.getElementById('db-status').className='mt-6 text-xs bg-green-500 text-white inline-block px-4 py-2 rounded-full';
+ }catch(e){console.error(e); apply({}); document.getElementById('db-status').textContent='⚠️ Konek lokal';}
+}
+function openAdminLogin(){document.getElementById('admin-login').classList.remove('hidden');}
+function closeAdminLogin(){document.getElementById('admin-login').classList.add('hidden');}
+function loginAdmin(){if(document.getElementById('admin-pass').value!=='sukma123'){showToast('❌ Password salah!');return;} localStorage.setItem('sukma_admin','1'); document.getElementById('admin-login').classList.add('hidden'); document.getElementById('public-page').classList.add('hidden'); document.getElementById('admin-page').classList.remove('hidden'); showToast('✅ Login sukses!');}
+function logoutAdmin(){localStorage.removeItem('sukma_admin'); backToPublic();}
+function backToPublic(){document.getElementById('admin-page').classList.add('hidden'); document.getElementById('public-page').classList.remove('hidden');}
+function openGlobal(){showToast('Scroll bawah - ada setting Tahun!'); window.scrollTo({top:600,behavior:'smooth'});}
+async function saveGlobal(){
+ const vals={tahun:document.getElementById('g-tahun').value,jumlah_lolos:document.getElementById('g-lolos').value,persen_lulus:document.getElementById('g-persen').value,p1_harga:document.getElementById('g-harga1').value,p2_harga:document.getElementById('g-harga2').value,p3_harga:document.getElementById('g-harga3').value,wa_link:document.getElementById('g-wa').value};
+ const map={}; Object.entries(vals).forEach(([k,v])=>map[k]={text:v}); apply(map); showToast('⏳ Menyimpan... Tahun '+vals.tahun);
+ try{ for(const [k,v] of Object.entries(vals)){ await supabaseClient.from('site_settings').upsert({key:k,value:{text:v}});} showToast('✅ BERHASIL! Tahun '+vals.tahun+' Live di semua HP!'); }catch(e){showToast('❌ Error: '+e.message);}
+}
+load();
+if(localStorage.getItem('sukma_admin')){ document.getElementById('public-page').classList.add('hidden'); document.getElementById('admin-page').classList.remove('hidden'); }
+</script>
+</body>
+</html>

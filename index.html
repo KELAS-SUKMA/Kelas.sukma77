@@ -46,24 +46,30 @@ const SUPABASE_URL='https://hbpaizdatzxlmzligdzw.supabase.co';
 const SUPABASE_KEY='sb_publishable_9c5qTdBmX2qNFd6iOfchLg_wXIi_9sO';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
   async function loadSAKTI() {
+    function gantiTahunDiLayar(tahunBaru){
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    let node;
+    while(node = walker.nextNode()){
+      if(node.nodeValue && /20(25|26|27)/.test(node.nodeValue)){
+        node.nodeValue = node.nodeValue.replace(/20(25|26|27)/g, tahunBaru);
+      }
+    }
+    document.title = document.title.replace(/20(25|26|27)/g, tahunBaru);
+  }
+
+  async function loadSAKTI() {
     try {
       const {data} = await supabaseClient.from('site_settings').select('*');
       if(!data) return;
-      data.forEach(r => {
-        if(r.key === 'tahun') {
-          try {
-            const v = typeof r.value === 'string' ? JSON.parse(r.value) : r.value;
-            const t = v.text || '2027';
-            if(t !== '2025') {
-              // GAK PAKE innerHTML LAGI BIAR ADMIN GAK MATI!
-              document.title = document.title.replace(/2025/g, t).replace(/2026/g, t);
-              console.log('✅ SAKTI Loaded:', t);
-              // Simpen ke localStorage biar React bisa baca
-              localStorage.setItem('tahun_sakti', t);
-            }
-          } catch(e){}
-        }
-      });
+      const row = data.find(r=>r.key==='tahun');
+      if(!row) return;
+      const v = typeof row.value==='string' ? JSON.parse(row.value) : row.value;
+      const t = v.text || v.tahun || '2027';
+      localStorage.setItem('tahun_sakti', t);
+      gantiTahunDiLayar(t);
+      setTimeout(()=>gantiTahunDiLayar(t), 1000);
+      setTimeout(()=>gantiTahunDiLayar(t), 3000);
+      setTimeout(()=>gantiTahunDiLayar(t), 5000);
     } catch(e){}
   }
   loadSAKTI();

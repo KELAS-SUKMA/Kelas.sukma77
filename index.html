@@ -74,5 +74,25 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     location.reload();
   }
   </script>
-  </body>
+
+    <script>
+// AUTO-HOOK ADMIN SAVE -> SAKTI
+setInterval(()=>{
+  const btns=[...document.querySelectorAll('button')];
+  const saveBtn=btns.find(b=>/save|simpan/i.test(b.textContent||''));
+  if(saveBtn && !saveBtn.dataset.saktiHooked){
+    saveBtn.dataset.saktiHooked='1';
+    saveBtn.addEventListener('click',()=>{
+      setTimeout(()=>{
+        const inputs=[...document.querySelectorAll('input')];
+        const tahunInput=inputs.find(i=> /^\d{4}$/.test(i.value) && i.value.startsWith('20'));
+        if(tahunInput && window.saveSAKTI){
+          saveSAKTI(tahunInput.value);
+        }
+      },800);
+    });
+  }
+},1500);
+</script>
+      </body>
 </html>

@@ -45,32 +45,34 @@ Error generating stack: `+u.message+`
 const SUPABASE_URL='https://hbpaizdatzxlmzligdzw.supabase.co';
 const SUPABASE_KEY='sb_publishable_9c5qTdBmX2qNFd6iOfchLg_wXIi_9sO';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-async function loadSAKTI() {
-  try {
-    const {data} = await supabaseClient.from('site_settings').select('*');
-    if(!data) return;
-    data.forEach(r => {
-      if(r.key === 'tahun') {
-        try {
-          const v = typeof r.value === 'string' ? JSON.parse(r.value) : r.value;
-          const t = v.text || '2027';
-          if(t !== '2025') {
-            document.documentElement.innerHTML = document.documentElement.innerHTML.split('2025').join(t);
-          }
-        } catch(e){}
-      }
-    });
-  } catch(e){}
-}
-loadSAKTI();
-window.saveSAKTI = async function(tahunBaru) {
-  await supabaseClient.from('site_settings').upsert({key:'tahun', value:{text:tahunBaru}}, {onConflict:'key'});
-  alert('✅ BERHASIL SAKTI! Tahun '+tahunBaru+' langsung live di semua HP!');
-}
-</script>
-  <script>(function(){function m(a){var h=a.getAttribute("href");if(!h)return;try{var u=new URL(h,document.baseURI);if((u.protocol==="http:"||u.protocol==="https:")&&u.host!==location.host){a.target="_blank";a.rel="noopener noreferrer";}}catch(e){}}function s(){document.querySelectorAll("a[href]").forEach(m);}if(document.readyState!=="loading"){s();}else{document.addEventListener("DOMContentLoaded",s);}document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(a){m(a);}},true);})();</script>
-  
-</body>
+  async function loadSAKTI() {
+    try {
+      const {data} = await supabaseClient.from('site_settings').select('*');
+      if(!data) return;
+      data.forEach(r => {
+        if(r.key === 'tahun') {
+          try {
+            const v = typeof r.value === 'string' ? JSON.parse(r.value) : r.value;
+            const t = v.text || '2027';
+            if(t !== '2025') {
+              // GAK PAKE innerHTML LAGI BIAR ADMIN GAK MATI!
+              document.title = document.title.replace(/2025/g, t).replace(/2026/g, t);
+              console.log('✅ SAKTI Loaded:', t);
+              // Simpen ke localStorage biar React bisa baca
+              localStorage.setItem('tahun_sakti', t);
+            }
+          } catch(e){}
+        }
+      });
+    } catch(e){}
+  }
+  loadSAKTI();
+  window.saveSAKTI = async function(tahunBaru) {
+    await supabaseClient.from('site_settings').upsert({key:'tahun', value:{text:tahunBaru}}, {onConflict:'key'});
+    localStorage.setItem('tahun_sakti', tahunBaru);
+    alert('✅ BERHASIL SAKTI! Tahun '+tahunBaru+' langsung live di semua HP!');
+    location.reload();
+  }
+  </script>
+  </body>
 </html>
-
